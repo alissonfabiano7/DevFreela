@@ -1,9 +1,17 @@
+using DevFreela.API.Models;
+using FluentValidation;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.Configure<FreelanceTotalCostConfig>(
+    builder.Configuration.GetSection("FreelanceTotalCostConfig")
+);
+
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+builder.Services.AddScoped<Services.IValidationService, Services.ValidationService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
